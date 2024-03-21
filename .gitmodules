@@ -1,0 +1,3 @@
+[submodule "Ontobridge/OntoBridge"]
+	path = Ontobridge/OntoBridge
+	url = https://github.com/InformaticaClinica/OntoBridge
