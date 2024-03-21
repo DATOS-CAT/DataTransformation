@@ -1,0 +1,41 @@
+version: 1
+default_environment: dev
+project_id: 792a0f58-7a4e-4ca0-8da4-256dd018a3fc
+environments:
+- name: dev
+- name: staging
+- name: prod
+plugins:
+  extractors:
+    - name: tap-csv
+      variant: meltano
+      pip_url: git+https://gitlab.com/meltano/tap-csv.git
+      config:
+        files:
+          - entity: GCAT_sex_bd_EGA
+            file: ${RELATIVE_PATH_1}/GCAT_sex_bd_EGA_v2.csv
+            keys:
+              - EGA_ID
+            
+          - entity: GCAT_diagnoses_EGA
+            file: ${RELATIVE_PATH_2}/GCAT_diagnoses_EGA_v2.csv
+            keys:
+              - EGA_ID
+            
+        add_metadata_columns: False
+
+  loaders:
+  - name: target-postgres
+    variant: meltanolabs
+    pip_url: git+https://github.com/MeltanoLabs/target-postgres.git
+    config:
+      host: localhost
+      port: 5434
+      user: postgres
+      database: datoscat_test
+      default_target_schema: raw
+  
+  transformers:
+  - name: dbt-postgres
+    variant: dbt-labs
+    pip_url: dbt-core~=1.3.0 dbt-postgres~=1.3.0

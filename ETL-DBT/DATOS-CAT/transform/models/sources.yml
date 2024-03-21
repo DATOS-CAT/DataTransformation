@@ -1,0 +1,9 @@
+version: 2
+
+sources:
+  - name: raw 
+    database: datoscat_test
+    schema: raw
+    tables:
+      - name: GCAT_diagnoses_EGA
+      - name: GCAT_sex_bd_EGA
